@@ -8,6 +8,7 @@ Vue.use(Vuex);
 const store = new Vuex.Store({
 	strict: true, // Не используйте строгий режим в production!
   state: {
+  	message: 'Привет, Vue!',
     count: 0,
     todos: [
 		{ id: 0, text: 'Изучить JavaScript', done: false, },
@@ -27,6 +28,9 @@ const store = new Vuex.Store({
     },
     addTodo(state, todo) {
     	state.todos.push(todo);
+    },
+    updateMessage(state, message) {
+    	state.message = message;
     }
   },
   getters: {
@@ -209,17 +213,26 @@ Vue.component('app-nav', {
 			</slot>
 		</div>
 	`,
+	computed: {
+	  message: {
+	    get() {
+	      return this.$store.state.message;
+	    },
+	    set(value) {
+	      this.$store.commit('updateMessage', value);
+	    }
+	  }
+	},
 	data: () => {
 		return {
 			classList: null,
-			message: 'Привет, Vue!'
 		};
 	},
 	//!!! Не используйте стрелочные функции в свойствах экземпляра и в коллбэках, например created: () => console.log(this.a) или vm.$watch('a', newVal => this.myMethod())
 	created() {
 	    setTimeout(() => {
 	    	this.message = 'Видоизменённый заголовок...';
-	    }, 1000);
+	    }, 4000);
 	}/*,
 	mounted() {
 	},

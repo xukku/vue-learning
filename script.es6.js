@@ -6,6 +6,7 @@ import { ComponentNotice } from './component.notice.js';
 Vue.use(Vuex);
 
 const store = new Vuex.Store({
+	strict: true,
   state: {
     count: 0,
     todos: [
@@ -23,6 +24,9 @@ const store = new Vuex.Store({
     },
     addObj(state, obj) {
       state.count += obj.amount;
+    },
+    addTodo(state, todo) {
+    	state.todos.push(todo);
     }
   },
   getters: {

@@ -6,7 +6,7 @@ import { ComponentNotice } from './component.notice.js';
 Vue.use(Vuex);
 
 const store = new Vuex.Store({
-	strict: true,
+	strict: true, // Не используйте строгий режим в production!
   state: {
     count: 0,
     todos: [

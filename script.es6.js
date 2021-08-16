@@ -1,9 +1,11 @@
 
 import Vue from 'https://cdn.jsdelivr.net/npm/vue@2/dist/vue.esm.browser.js';
 import 'https://unpkg.com/vuex';
+import 'https://unpkg.com/vue-router/dist/vue-router.js';
 import { ComponentNotice } from './component.notice.js';
 
 Vue.use(Vuex);
+Vue.use(VueRouter);
 
 const store = new Vuex.Store({
 	strict: true, // Не используйте строгий режим в production!
@@ -457,7 +459,27 @@ Vue.component('app-view', {
 	}
 });
 
+const Foo = { template: `
+	<lazy-header>
+		Route1
+	</lazy-header>
+` }
+const Bar = { template: `
+	<lazy-header>
+		Route2
+	</lazy-header>
+` }
+
+
+const router = new VueRouter({
+	routes: [
+	  { path: '/foo', component: Foo },
+	  { path: '/bar', component: Bar }
+	]
+})
+
 var app = new Vue({
+	router,
 	el: '#app',
 	template: '#app-template',
 	data: {
@@ -476,10 +498,19 @@ var app = new Vue({
 		countLocal() {
 			return this.$store.state.count;
 		},
+		username() {
+	      // Мы скоро разберём что такое `params`
+	      return this.$route.params.username
+	    },
 		...Vuex.mapState([
 		    'count',
 		])
 	},
+	methods: {
+		goBack() {
+     		window.history.length > 1 ? this.$router.go(-1) : this.$router.push('/')
+	    }
+	}
 });
 
 var app5 = new Vue({

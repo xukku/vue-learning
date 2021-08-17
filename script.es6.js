@@ -505,6 +505,10 @@ const Page404NotFound = { template: `
 	</lazy-header>
 ` }
 
+const UserHome = { template: `
+	<pre>H O M E  P A G E</pre>
+` }
+
 
 const router = new VueRouter({
 	routes: [
@@ -519,6 +523,10 @@ const router = new VueRouter({
 	        {
 	          path: 'post/:post_id',
 	          component: UserPost
+	        },
+	        {
+	        	path: '',
+	        	component: UserHome
 	        }
 	      ]
   		},

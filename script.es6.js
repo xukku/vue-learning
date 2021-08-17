@@ -531,6 +531,7 @@ const UserHome = { template: `
 
 
 const router = new VueRouter({
+	mode: 'history', // "нормальные" урл - приложение должно быть расположено в корне сайта
 	routes: [
 	  {
 	  	path: '/foo/:x',

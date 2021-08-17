@@ -469,12 +469,17 @@ const Bar = { template: `
 		Route2
 	</lazy-header>
 ` }
-
+const UserProfile = { template: `
+	<lazy-header>
+		Это профиль пользователя [ {{ $route.params.id }} ]
+	</lazy-header>
+` }
 
 const router = new VueRouter({
 	routes: [
 	  { path: '/foo', component: Foo },
-	  { path: '/bar', component: Bar }
+	  { path: '/bar', component: Bar },
+      { path: '/user/:id', component: UserProfile }
 	]
 })
 

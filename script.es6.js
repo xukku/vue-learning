@@ -521,6 +521,7 @@ const router = new VueRouter({
 	          component: UserProfile
 	        },
 	        {
+	        	name: 'user_post',
 	          path: 'post/:post_id',
 	          component: UserPost
 	        },
@@ -548,6 +549,21 @@ var app = new Vue({
 	data: {
 	},
 	store,
+	created() {
+		this.$router.push('/user/tester');
+		setTimeout(() => {
+			this.$router.push('/user/tester/post/100');
+		}, 2000);
+		setTimeout(() => {
+			this.$router.push({
+				name: 'user_post',
+				params: {
+					id: 'tester5',
+					post_id: 1000,
+				}
+			});
+		}, 4000);
+	},
 	computed: {
 		classList() {
 			return {

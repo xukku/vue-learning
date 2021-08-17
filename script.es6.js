@@ -459,16 +459,26 @@ Vue.component('app-view', {
 	}
 });
 
-const Foo = { template: `
-	<lazy-header>
-		Route1
-	</lazy-header>
-` }
-const Bar = { template: `
-	<lazy-header>
-		Route2
-	</lazy-header>
-` }
+const Foo = {
+	props: [
+		'x',
+	],
+	template: `
+		<lazy-header>
+			{{ x }} Route1 {{ x }}
+		</lazy-header>
+	`
+}
+const Bar = {
+	props: [
+		'x',
+	],
+	template: `
+		<lazy-header>
+			{{ x }} Route2 {{ x }}
+		</lazy-header>
+	`
+}
 const User = { template: `
 		<lazy-header>
 			<h1>Это раздел пользователя [ {{ $route.params.id }} ]</h1>
@@ -484,15 +494,25 @@ const User = { template: `
 	}
 }
 
-const UserProfile = { template: `
-	<lazy-header>
-		Это профиль пользователя [ {{ $route.params.id }} ]
-	</lazy-header>
-` }
+const UserProfile = {
+	props: [
+		'query',
+	],
+	template: `
+		<lazy-header>
+			Это профиль пользователя [ {{ query }} ]
+		</lazy-header>
+	`
+}
 
-const UserPost = { template: `
+const UserPost = {
+	props: [
+		'id',
+		'post_id',
+	],
+	template: `
 	<lazy-header>
-		Это сообщение [ {{ $route.params.post_id }} ] пользователя [ {{ $route.params.id }} ]
+		Это сообщение [ {{ post_id }} ] пользователя [ {{ id }} ]
 	</lazy-header>
 ` }
 
@@ -513,25 +533,37 @@ const UserHome = { template: `
 const router = new VueRouter({
 	routes: [
 	  {
-	  	path: '/foo',
+	  	path: '/foo/:x',
 	  	components: {
 	  		default: Foo,
 	  		a: Bar,
 	  	},
+	  	props: {
+	  		default: true,
+	  		a: true
+	  	},
 	  	alias: '/bbb',
 	  },
-	  { path: '/bar', component: Bar },
+	{
+		path: '/bar/:x',
+		component: Bar,
+		props: {
+		  	x: 'Проверка',
+		}
+	},
 	  { path: '/aaa', redirect: '/bar' },
       { path: '/user/:id', component: User,
       	 children: [
 	        {
 	          path: 'profile',
-	          component: UserProfile
+	          component: UserProfile,
+	          props: (route) => ({ query: route.query.q })
 	        },
 	        {
 	        	name: 'user_post',
 	          path: 'post/:post_id',
-	          component: UserPost
+	          component: UserPost,
+				props: true
 	        },
 	        {
 	        	path: '',

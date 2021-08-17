@@ -517,7 +517,8 @@ const router = new VueRouter({
 	  	components: {
 	  		default: Foo,
 	  		a: Bar,
-	  	}
+	  	},
+	  	alias: '/bbb',
 	  },
 	  { path: '/bar', component: Bar },
       { path: '/user/:id', component: User,

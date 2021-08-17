@@ -563,6 +563,9 @@ var app = new Vue({
 				}
 			});
 		}, 4000);
+		setTimeout(() => {
+			router.go(-1);
+		}, 5000);
 	},
 	computed: {
 		classList() {

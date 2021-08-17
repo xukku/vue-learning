@@ -512,7 +512,13 @@ const UserHome = { template: `
 
 const router = new VueRouter({
 	routes: [
-	  { path: '/foo', component: Foo },
+	  {
+	  	path: '/foo',
+	  	components: {
+	  		default: Foo,
+	  		a: Bar,
+	  	}
+	  },
 	  { path: '/bar', component: Bar },
       { path: '/user/:id', component: User,
       	 children: [

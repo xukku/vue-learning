@@ -521,6 +521,7 @@ const router = new VueRouter({
 	  	alias: '/bbb',
 	  },
 	  { path: '/bar', component: Bar },
+	  { path: '/aaa', redirect: '/bar' },
       { path: '/user/:id', component: User,
       	 children: [
 	        {

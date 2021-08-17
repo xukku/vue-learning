@@ -470,15 +470,33 @@ const Bar = { template: `
 	</lazy-header>
 ` }
 const UserProfile = { template: `
-	<lazy-header>
-		Это профиль пользователя [ {{ $route.params.id }} ]
-	</lazy-header>
-` }
+		<lazy-header>
+			Это профиль пользователя [ {{ $route.params.id }} ]
+		</lazy-header>
+	`,
+
+	beforeRouteUpdate(to, from, next) {
+	    // обрабатываем изменение параметров маршрута...
+	    console.log(to, from);
+	    // не забываем вызвать next()
+	    next();
+	}
+}
 const UserPost = { template: `
 	<lazy-header>
 		Это сообщение [ {{ $route.params.post_id }} ] пользователя [ {{ $route.params.username }} ]
 	</lazy-header>
 ` }
+
+const Page404NotFound = { template: `
+	<lazy-header>
+		<h1>404 Not found</h1>
+		<p>{{ $route.params }}</p>
+		<p>{{ $route.query }}</p>
+		<p>{{ $route.hash }}</p>
+	</lazy-header>
+` }
+
 
 const router = new VueRouter({
 	routes: [
@@ -486,6 +504,13 @@ const router = new VueRouter({
 	  { path: '/bar', component: Bar },
       { path: '/user/:id', component: UserProfile },
       { path: '/user/:username/post/:post_id', component: UserPost },
+
+      {
+      	// example /#/sadsadsdasd?test=1#sss
+
+		  // сопоставляется со всем
+		  path: '*', component: Page404NotFound
+		}
 	]
 })
 

@@ -469,9 +469,10 @@ const Bar = { template: `
 		Route2
 	</lazy-header>
 ` }
-const UserProfile = { template: `
+const User = { template: `
 		<lazy-header>
-			Это профиль пользователя [ {{ $route.params.id }} ]
+			<h1>Это раздел пользователя [ {{ $route.params.id }} ]</h1>
+			<router-view></router-view>
 		</lazy-header>
 	`,
 
@@ -482,9 +483,16 @@ const UserProfile = { template: `
 	    next();
 	}
 }
+
+const UserProfile = { template: `
+	<lazy-header>
+		Это профиль пользователя [ {{ $route.params.id }} ]
+	</lazy-header>
+` }
+
 const UserPost = { template: `
 	<lazy-header>
-		Это сообщение [ {{ $route.params.post_id }} ] пользователя [ {{ $route.params.username }} ]
+		Это сообщение [ {{ $route.params.post_id }} ] пользователя [ {{ $route.params.id }} ]
 	</lazy-header>
 ` }
 
@@ -502,8 +510,19 @@ const router = new VueRouter({
 	routes: [
 	  { path: '/foo', component: Foo },
 	  { path: '/bar', component: Bar },
-      { path: '/user/:id', component: UserProfile },
-      { path: '/user/:username/post/:post_id', component: UserPost },
+      { path: '/user/:id', component: User,
+      	 children: [
+	        {
+	          path: 'profile',
+	          component: UserProfile
+	        },
+	        {
+	          path: 'post/:post_id',
+	          component: UserPost
+	        }
+	      ]
+  		},
+      //{ path: '/user/:username/post/:post_id', component: UserPost },
 
       {
       	// example /#/sadsadsdasd?test=1#sss

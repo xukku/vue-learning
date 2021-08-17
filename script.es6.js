@@ -529,6 +529,10 @@ const UserHome = { template: `
 	<pre>H O M E  P A G E</pre>
 ` }
 
+const LoginPage = { template: `
+	<pre><i>LOGIN PAGE</i></pre>
+` }
+
 
 const router = new VueRouter({
 	mode: 'history', // "нормальные" урл - приложение должно быть расположено в корне сайта
@@ -553,6 +557,11 @@ const router = new VueRouter({
 		}
 	},
 	  { path: '/aaa', redirect: '/bar' },
+	  { path: '/login', component: LoginPage },
+	  {
+	  	path: '/test-is-login',
+	  	meta: { requiresAuth: true }
+	  },
       { path: '/user/:id', component: User,
       	 children: [
 	        {
@@ -581,6 +590,29 @@ const router = new VueRouter({
 		  path: '*', component: Page404NotFound
 		}
 	]
+})
+
+const auth = {
+	loggedIn() {
+		return false;
+	}
+}
+
+router.beforeEach((to, from, next) => {
+  if (to.matched.some(record => record.meta.requiresAuth)) {
+    // этот путь требует авторизации, проверяем залогинен ли
+    // пользователь, и если нет, перенаправляем на страницу логина
+    if (!auth.loggedIn()) {
+      next({
+        path: '/login',
+        query: { redirect: to.fullPath }
+      })
+    } else {
+      next()
+    }
+  } else {
+    next() // всегда так или иначе нужно вызвать next()!
+  }
 })
 
 var app = new Vue({

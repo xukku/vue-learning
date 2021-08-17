@@ -55,6 +55,7 @@
 			<router-link to="/user/tester">Перейти к профилю Tester</router-link>
 			<router-link to="/user/user">Перейти к профилю User</router-link>
 			<router-link :to="{ name: 'user_post', params: { id: 'tester1', post_id: 201 }}">Перейти к сообщению пользователя Tester</router-link>
+			<router-link to="/test-is-login">Test is Login</router-link>
 		</p>
 		<!-- отображаем тут компонент, для которого совпадает маршрут -->
 		<router-view></router-view>

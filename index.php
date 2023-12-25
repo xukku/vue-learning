@@ -1,5 +1,13 @@
 <?require($_SERVER["DOCUMENT_ROOT"]."/bitrix/header.php");?>
 
+<script type="importmap">
+{
+	"imports": {
+		"ui.vue3": "/bitrix/js/ui/vue3/vue/prod/src/vue.js"
+	}
+}
+</script>
+
 <?php
 
 use Bitrix\Main\UI\Extension;
@@ -102,13 +110,7 @@ Extension::load('ui.vue3');
 
 <h3>App2</h3>
 <div id="application"></div>
-<script type="importmap">
-{
-	"imports": {
-		"ui.vue3": "/bitrix/js/ui/vue3/vue/prod/src/vue.js"
-	}
-}
-</script>
+
 <script type="module">
 import {BitrixVue} from 'ui.vue3';
 BitrixVue.createApp({

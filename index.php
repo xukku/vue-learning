@@ -29,6 +29,10 @@ Extension::load('ui.vue3');
 	<p>
 		<ButtonCounter/> | <ButtonCounter2/>
 	</p>
+	<p>
+		<button @click="show=!show">Toggle player</button>
+		<AudioPlayer v-if="show" src="https://www.youtube.com/embed/oHBga-h1lAA" style="width: 300px; margin: 10px 0"/>
+	</p>
 </script>
 
 <script type="module">
@@ -65,22 +69,45 @@ Extension::load('ui.vue3');
 
 	//console.log(h, ref, reactive);
 
+	const LoadingComponent = {
+		template: `
+			<div>
+				Loading...
+			</div>
+		`,
+	};
+	const ErrorComponent = {
+		template: `
+			<div>
+				Error while loading...
+			</div>
+		`,
+	};
+
 	BitrixVue.createApp({
 		components: {
 			ButtonCounter,
 			ButtonCounter2,
+			AudioPlayer: BitrixVue.defineAsyncComponent('ui.vue3.components.audioplayer', 'AudioPlayer', {
+				loadingComponent: LoadingComponent,
+				delay: 2000,
+				errorComponent: ErrorComponent,
+				timeout: 5000,
+			})
 		},
 
 		// new
 		setup() {
 			const counter = ref(0)
+			const show = ref(false)
 
 			const increment = () => counter.value++
 
 			setInterval(increment, 1000)
 
 			return {
-				counter
+				counter,
+				show,
 			}
 		},
 

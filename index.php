@@ -11,52 +11,24 @@ Extension::load('ui.vue3');
 ?>
 
 <h3>App1</h3>
-<div id="application"></div>
-<script type="importmap">
-{
-	"imports": {
-		"ui.vue3": "/bitrix/js/ui/vue3/vue/prod/src/vue.js"
-	}
-}
-</script>
-<script type="module">
-import {BitrixVue} from 'ui.vue3';
-BitrixVue.createApp({
-	data()
-	{
-		return {
-			counter: 0
-		}
-	},
-	mounted()
-	{
-		setInterval(() => {
-			this.counter++
-		}, 1000)
-	},
-	// language=Vue
-	template: `
-		Counter: {{ counter }}
-	`
-}).mount('#application');
-</script>
 
-<hr>
+<div id="application1">-1</div>
 
-
-<h3>App2</h3>
-
-<div id="application2">-1</div>
-
-<script type="text/x-template" id="app-template2">
+<script type="text/x-template" id="app-template1">
 	<div>
 		Counter: {{ counter }}
 	</div>
 </script>
 
 <script type="module">
+
 	//const BitrixVue = BX.Vue3.BitrixVue;
-	const {BitrixVue, h, ref, reactive} = BX.Vue3;
+	const {
+		BitrixVue,
+		ref,
+		//h,
+		//reactive
+	} = BX.Vue3;
 
 	//console.log(h, ref, reactive);
 
@@ -90,9 +62,43 @@ BitrixVue.createApp({
 		},
 		*/
 
-		template: '#app-template2'
-	}).mount('#application2');
+		template: '#app-template1'
 
+	}).mount('#application1');
+
+</script>
+
+<hr>
+
+<h3>App2</h3>
+<div id="application"></div>
+<script type="importmap">
+{
+	"imports": {
+		"ui.vue3": "/bitrix/js/ui/vue3/vue/prod/src/vue.js"
+	}
+}
+</script>
+<script type="module">
+import {BitrixVue} from 'ui.vue3';
+BitrixVue.createApp({
+	data()
+	{
+		return {
+			counter: 0
+		}
+	},
+	mounted()
+	{
+		setInterval(() => {
+			this.counter++
+		}, 1000)
+	},
+	// language=Vue
+	template: `
+		Counter: {{ counter }}
+	`
+}).mount('#application');
 </script>
 
 <?require($_SERVER["DOCUMENT_ROOT"]."/bitrix/footer.php");?>

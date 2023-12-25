@@ -18,6 +18,9 @@ Extension::load('ui.vue3');
 	<div>
 		Counter: {{ counter }}
 	</div>
+	<p>
+		<ButtonCounter/> | <ButtonCounter2/>
+	</p>
 </script>
 
 <script type="module">
@@ -30,9 +33,36 @@ Extension::load('ui.vue3');
 		//reactive
 	} = BX.Vue3;
 
+	const ButtonCounter = {
+		data()
+		{
+			return {
+				count: 0
+			}
+		},
+		// language=Vue
+		template: '<button @click="count++">—чЄтчик кликов Ч {{ count }}</button>'
+	};
+
+	const ButtonCounter2 = BitrixVue.mutableComponent('ui-button-counter', {
+		data()
+		{
+			return {
+				count: 0
+			}
+		},
+		// language=Vue
+		template: '<button @click="count++">—чЄтчик кликов Ч {{ count }}</button>'
+	});
+
 	//console.log(h, ref, reactive);
 
 	BitrixVue.createApp({
+		components: {
+			ButtonCounter,
+			ButtonCounter2,
+		},
+
 		// new
 		setup() {
 			const counter = ref(0)
